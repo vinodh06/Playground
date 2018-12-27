@@ -1,10 +1,5 @@
-//: Playground - noun: a place where people can play
 
 import UIKit
-
-
-
-
 
 
 func loadImage(named name: String,
@@ -28,8 +23,6 @@ enum ImageError: Error {
     case failedToTint
     case failedToResize
 }
-
-
 
 
 private func loadImage(named name: String) throws -> UIImage {
@@ -61,18 +54,5 @@ do {
 } catch {
     print(error)
 }
-/*
-guard let userName = username, !userName.trimmingCharacters(in: .whitespaces).isEmpty else {
-    self.vcProtocol.showErrorForUserName(message:"Username".localized())
-    self.vcProtocol.animateActivityIndicator(isAnimate: false)
-    return
-}
-// checks valid password
-guard let password = password, !password.trimmingCharacters(in: .whitespaces).isEmpty else {
-    self.vcProtocol.showErrorForPassword(message: "Password".localized())
-    self.vcProtocol.animateActivityIndicator(isAnimate: false)
-    return
-}
- */
 
 
