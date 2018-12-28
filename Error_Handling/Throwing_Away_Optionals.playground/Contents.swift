@@ -33,8 +33,8 @@ private func loadImage(named name: String) throws -> UIImage {
     return image
 }
 
-func tint(_: UIImage, with: UIColor) throws -> UIImage {
-    throw ImageError.failedToTint
+func tint(image img: UIImage, with: UIColor) throws -> UIImage {
+    return img
 }
 
 func resize(_: UIImage, to: CGSize) throws -> UIImage {
@@ -45,12 +45,12 @@ func loadImageOptimized(named name: String,
                tintedWith color: UIColor,
                resizedTo size: CGSize) throws -> UIImage {
     var image = try loadImage(named: name)
-    image = try tint(image, with: color)
+    image = try tint(image: image, with: color)
     return try resize(image, to: size)
 }
 
 do {
-    _ = try loadImageOptimized(named: "apple.png", tintedWith: UIColor.red, resizedTo: CGSize())
+    _ = try loadImageOptimized(named: "apple2.png", tintedWith: UIColor.red, resizedTo: CGSize())
 } catch {
     print(error)
 }

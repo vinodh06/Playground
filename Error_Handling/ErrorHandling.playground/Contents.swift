@@ -1,5 +1,3 @@
-//: Playground - noun: a place where people can play
-
 import Foundation
 
 /*:
@@ -25,7 +23,6 @@ enum VendingMachineError: Error {
     case insufficientFunds(coinsNeeded: Int)
     case outOfStock
 }
-
 /*:
  ## Handling Erros
  **There are four ways to handle errors in Swift -**
@@ -97,8 +94,15 @@ func buyFavoriteSnack(person: String, vendingMachine: VendingMachine) throws {
     try vendingMachine.vend(itemNamed: snackName)
 }
 
-var vendingMachine = VendingMachine()
 
+//var vendingMachine2 = VendingMachine()
+//
+//_ = try buyFavoriteSnack(person: "Alice", vendingMachine: vendingMachine2)
+//print("calling")
+
+//: # Handling Errors Using Do-Catch
+var vendingMachine = VendingMachine()
+/*
 func nourish(with item: String) throws {
     do {
         try vendingMachine.vend(itemNamed: item)
@@ -112,10 +116,7 @@ do {
 } catch {
     print("Unexpected non-vending-machine-related error: \(error)")
 }
-
-
-//: # Handling Errors Using Do-Catch
-
+*/
 vendingMachine.coinsDeposited = 8
 do {
    try buyFavoriteSnack(person: "Alice", vendingMachine: vendingMachine)
@@ -131,16 +132,11 @@ do {
 }
 
 //: # Converting Errors to Optional Values
-do {
-    try canThrowErrors()
-}
-catch {
-    print(error)
-}
-
+let x = try? canThrowErrors()
+print(x ?? "nil")
 
 //: Disabling Error Propagation
-//let y = try! canThrowErrors()
+let y = try! canThrowErrors()
 
 /*:
  #Specifying Cleanup Actions

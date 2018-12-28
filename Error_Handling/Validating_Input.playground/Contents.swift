@@ -19,7 +19,7 @@ func signUpIfPossible(with credentials: Credentials) {
     // Additional validation
     print("Success")
 }
-let credentials = Credentials(username: "vino1234", password: "12345")
+
 //signUpIfPossible(with: credentials)
 
 
@@ -45,6 +45,10 @@ func validate(
         throw ValidationError(message: message)
     }
 }
+
+
+
+
 /*
 func passwordValidator() -> Validator<String> {
     return Validator { string in
@@ -59,7 +63,7 @@ extension Validator where Value == String {
     static var password: Validator {
         return Validator { string in
             try validate(
-                string.count >= 7,
+             string.count >= 7,
                 errorMessage: "Password must contain min 7 characters"
             )
             
@@ -81,10 +85,14 @@ extension Validator where Value == String {
                 string.count >= 7,
                 errorMessage: "Username must contain min 7 characters"
             )
+            
+            try validate(
+                string.uppercased() != string,
+                errorMessage: "Password must contain a lowercased character"
+            )
         }
     }
 }
-
 
 func validate<T>(_ value: T,
                  using validator: Validator<T>) throws {
@@ -97,8 +105,10 @@ func signUpIfPossibleExt(with credentials: Credentials) throws {
     print("Success")
 }
 
+
+let credentials = Credentials(username: "vino1234", password: "12345678Aa")
 do {
     try signUpIfPossibleExt(with: credentials)
 } catch {
-    print(error)
+    print(error.localizedDescription)
 }
