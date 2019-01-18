@@ -97,7 +97,7 @@ extension URLSession {
     
 }
 
-
+/*
 if let apple_stock_url = URL(string: "https://api.iextrading.com/1.0/stock/googl/price") {
     let requestFuture = URLSession.shared.request(url: apple_stock_url)
     requestFuture.observe { result in
@@ -112,8 +112,59 @@ if let apple_stock_url = URL(string: "https://api.iextrading.com/1.0/stock/googl
     }
     print("Finished")
 }
+*/
 
 
+if let apple_stock_url = URL(string: "https://api.iextrading.com/1.0/stock/aapl/book") {
+    let requestFuture = URLSession.shared.request(url: apple_stock_url)
+    requestFuture.observe { result in
+        switch result {
+        case .value(let value):
+            do {
+                    let decoder = JSONDecoder()
+                    let stock = try decoder.decode(Root.self, from: value)
+                    print(stock.quote)
+            } catch let error {
+                print(error)
+            }
+        case .error(let error):
+            print(error)
+        }
+    }
+    print("Finished")
+}
+
+
+struct Root : Decodable {
+    
+    let quote : stock
+    
+    struct stock: Decodable {
+        var name: String
+        var symbol: String
+        var sector: String
+        var price: Double
+        
+        private enum CodingKeys: String, CodingKey {
+            case name = "companyName"
+            case symbol
+            case sector
+            case price = "latestPrice"
+        }
+    }
+}
+
+/*
+let json = """
+{"quote":{"symbol":"AAPL","companyName":"Apple Inc.","primaryExchange":"Nasdaq Global Select","sector":"Technology","calculationPrice":"close","open":154.22,"openTime":1547735400372,"close":155.86,"closeTime":1547758800470,"high":157.66,"low":153.26,"latestPrice":155.86,"latestSource":"Close","latestTime":"January 17, 2019","latestUpdate":1547758800470,"latestVolume":29604499,"iexRealtimePrice":null,"iexRealtimeSize":null,"iexLastUpdated":null,"delayedPrice":155.86,"delayedPriceTime":1547758800470,"extendedPrice":155.84,"extendedChange":-0.02,"extendedChangePercent":-0.00013,"extendedPriceTime":1547762369585,"previousClose":154.94,"change":0.92,"changePercent":0.00594,"iexMarketPercent":null,"iexVolume":null,"avgTotalVolume":45782276,"iexBidPrice":null,"iexBidSize":null,"iexAskPrice":null,"iexAskSize":null,"marketCap":737187095580,"peRatio":13.13,"week52High":233.47,"week52Low":142,"ytdChange":-0.007104579533941071},"bids":[],"asks":[],"systemEvent":{}}
+""".data(using: .utf8)!
+
+let decoder = JSONDecoder()
+let products = try decoder.decode(Root.self, from: json)
+//for product in products {
+    print(products.quote.name)
+//}
+*/
 
 /*
 class StockLoader {
